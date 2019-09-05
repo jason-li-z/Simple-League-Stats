@@ -9,13 +9,17 @@
       <router-link to="/">Go Back</router-link>
     </div>
 
-    <div v-if="profileData" class="container">
-      <div v-for="data in championData.data">
-        {{data.key}} - {{data.name}}
+    <div v-if="profileData" id="container">
+      <div v-for="data in profileData">
+        <div
+          v-for="champ in championData.data"
+          v-if="champ.key == data.championId"
+        >{{data.championLevel}} - {{champ.name}}</div>
       </div>
     </div>
   </section>
 </template>
+
 
 <script>
 import axios from "axios";
