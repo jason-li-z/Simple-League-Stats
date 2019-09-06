@@ -23,10 +23,23 @@ export default {
   name: "Search",
   methods: {
     onSubmit() {
+      this.username = this.username.trim();
       if (!this.username) {
-        this.$toasted.show("Please enter a username", {
+        this.$toasted.show("Username field is empty", {
           duration: 3000,
-          position: "bottom-center"
+          position: "bottom-center",
+          theme: "bubble",
+          type: "error"
+        });
+      } else if (
+        this.username.length < 3 ||
+        this.username.match("^[[!@#$%^&*()]]")
+      ) {
+        this.$toasted.show("Please enter a valid username", {
+          duration: 3000,
+          position: "bottom-center",
+          theme: "bubble",
+          type: "error"
         });
       } else {
         this.$router.push(`/summoner/${this.username}`);
