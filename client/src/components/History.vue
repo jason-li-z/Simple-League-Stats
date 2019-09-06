@@ -5,7 +5,7 @@
     </div>
 
     <div v-if="error">
-      <h1>{{error}}...</h1>
+      <h1>{{error}}</h1>
       <router-link to="/">Go Back</router-link>
     </div>
 
@@ -22,6 +22,7 @@
           - Points: {{data.championPoints}}
         </div>
       </div>
+      <router-link to="/">Go Back</router-link>
     </div>
   </section>
 </template>
@@ -49,13 +50,15 @@ export default {
       const res = await axios.get(
         `/api/v1/summoner/${this.$route.params.username}`
       );
+
       this.profileData = res.data;
+
       console.log(this.profileData);
       this.loading = false;
       this.username = this.$route.params.username;
     } catch (err) {
       this.loading = false;
-      this.error = err.res.data.message;
+      this.error = err.response.data.message;
     }
   }
 };
