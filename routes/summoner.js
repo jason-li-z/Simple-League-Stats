@@ -19,7 +19,13 @@ router.get("/:name", async (request, response) => {
 
     if (data.status && data.status.status_code == 404) {
       return response.status(404).json({
-        message: "Summoner profile not found"
+        message: `User data for ${summonerName} was not found`
+      });
+    }
+
+    if (data.status && data.status.status_code == 403) {
+      return response.status(403).json({
+        message: "Developer needs to update API Key"
       });
     }
 
