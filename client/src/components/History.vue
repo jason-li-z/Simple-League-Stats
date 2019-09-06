@@ -10,11 +10,17 @@
     </div>
 
     <div v-if="profileData" id="container">
+      <h2>Username: {{username}}</h2>
       <div v-for="data in profileData">
-        <div
-          v-for="champ in championData.data"
-          v-if="champ.key == data.championId"
-        >{{data.championLevel}} - {{champ.name}}</div>
+        <div v-for="champ in championData.data" v-if="champ.key == data.championId">
+          Mastery Level: {{data.championLevel}} - Champion: {{champ.name}}
+          <img
+            align="middle"
+            id="avatars"
+            v-bind:src="imgURLs + champ.image.full"
+          />
+          - Points: {{data.championPoints}}
+        </div>
       </div>
     </div>
   </section>
@@ -32,7 +38,9 @@ export default {
       loading: false,
       error: null,
       profileData: null,
-      championData: json
+      championData: json,
+      imgURLs: "http://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/",
+      username: this.username
     };
   },
   async created() {
@@ -44,6 +52,7 @@ export default {
       this.profileData = res.data;
       console.log(this.profileData);
       this.loading = false;
+      this.username = this.$route.params.username;
     } catch (err) {
       this.loading = false;
       this.error = err.res.data.message;
@@ -55,5 +64,16 @@ export default {
 <style scoped>
 * {
   color: #ef8354;
+}
+
+#avatars {
+  max-width: 75px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+#container {
+  font: bolder;
+  font-size: 25px;
 }
 </style>
