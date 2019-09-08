@@ -10,7 +10,8 @@
     </div>
 
     <div v-if="profileData" id="container">
-      <h2>Username: {{username}}</h2>
+      <h2>Masteries for {{username}}</h2>
+
       <div v-for="data in profileData">
         <div v-for="champ in championData.data" v-if="champ.key == data.championId">
           Mastery Level: {{data.championLevel}} - Champion: {{champ.name}}
