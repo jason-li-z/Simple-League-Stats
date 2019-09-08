@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch"); // Backend Fetch API,
 
-// acc id = Es0kQQvanM8vBY6QHZVRm0IGrCLgDPVX1Ob24V0fOjpq568
-
 router.get("/:name", async (request, response) => {
   // async / await --> wait to catch errors
   try {
@@ -38,7 +36,10 @@ router.get("/:name", async (request, response) => {
       `${process.env.SUMMONER_DATA_URL}/${accountID}${process.env.RIOT_API_KEY}`
     );
     const summonerData = await res2.json();
-    response.json(summonerData);
+    response.json({
+      summonerData,
+      name: data.name
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({
