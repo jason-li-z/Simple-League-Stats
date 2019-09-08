@@ -19,6 +19,18 @@ if (process.env.NODE_ENV === "development") {
 // Summoner's Routes
 app.use("/api/v1/summoner/", require("./routes/summoner"));
 
+// Production deployment
+
+if (process.env.NODE_ENV === "production") {
+  // Setting Static Folder
+  app.use(express.static(__dirname + "/public/"));
+
+  // Single Paged APPs
+  app.get(/.*/, (request, response) =>
+    response.sendFile(__dirname + "/public/index.html")
+  );
+}
+
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
