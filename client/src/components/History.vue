@@ -52,11 +52,11 @@ export default {
         `/api/v1/summoner/${this.$route.params.username}`
       );
 
-      this.profileData = res.data;
+      this.profileData = res.data.summonerData;
 
       console.log(this.profileData);
       this.loading = false;
-      this.username = this.$route.params.username;
+      this.username = res.data.name;
     } catch (err) {
       this.loading = false;
       this.error = err.response.data.message;
