@@ -33,6 +33,7 @@ export default {
         });
       } else if (
         this.username.length < 3 ||
+        this.username.length > 16 ||
         this.username.match("^[[!@#$%^&*()]]")
       ) {
         this.$toasted.show("Please enter a valid username", {
