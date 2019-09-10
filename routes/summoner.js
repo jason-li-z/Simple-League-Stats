@@ -43,20 +43,28 @@ router.get("/:name", async (request, response) => {
     console.log(res3);
     var result = "";
     var tier = "";
+    var max = -1;
 
     if (res3.status == 404) {
       result = "Data not found";
+      tier = "";
+      max = "";
     } else if (res3.status != 404 && mmrData.ranked.avg == null) {
       result = "Ranked Data not found";
+      tier = "";
+      max = "";
     } else {
-      result =
-        "~" + mmrData.ranked.avg + " within " + mmrData.ranked.tierData[1].name;
+      result = "~" + mmrData.ranked.avg + " within ";
+      tier = mmrData.ranked.tierData[1].name;
+      max = ` —— Max MMR in ${mmrData.ranked.tierData[1].name} is ${mmrData.ranked.tierData[1].max}`;
     }
 
     response.json({
       summonerData,
       name: data.name,
-      mmr: result
+      mmr: result,
+      avgMmrRank: tier,
+      maxMmr: max
     });
   } catch (err) {
     console.error(err);

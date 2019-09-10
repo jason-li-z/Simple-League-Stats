@@ -11,7 +11,7 @@
 
     <div v-if="profileData" id="container">
       <h2>Masteries for {{username}}</h2>
-      <h4>MMR: {{mmr}}</h4>
+      <h4>MMR: {{mmr}} {{tier}}{{max}}</h4>
 
       <div v-for="data in profileData">
         <div v-for="champ in championData.data" v-if="champ.key == data.championId">
@@ -45,7 +45,8 @@ export default {
       imgURLs: "http://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/",
       username: this.username,
       mmr: this.mmr,
-      summary: this.summary
+      tier: this.tier,
+      max: this.max
     };
   },
   async created() {
@@ -61,7 +62,8 @@ export default {
       this.loading = false;
       this.username = res.data.name;
       this.mmr = res.data.mmr;
-      this.summary = res.data.summary;
+      this.tier = res.data.avgMmrRank;
+      this.max = res.data.maxMmr;
     } catch (err) {
       this.loading = false;
       this.error = err.response.data.message;
