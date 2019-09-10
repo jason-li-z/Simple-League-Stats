@@ -11,7 +11,7 @@
 
     <div v-if="profileData" id="container">
       <h2>Masteries for {{username}}</h2>
-      <h2>MMR: ~{{mmr}} in {{summary}}</h2>
+      <h4>MMR: {{mmr}}</h4>
 
       <div v-for="data in profileData">
         <div v-for="champ in championData.data" v-if="champ.key == data.championId">
