@@ -37,17 +37,26 @@ router.get("/:name", async (request, response) => {
       `${process.env.SUMMONER_DATA_URL}/${accountID}${process.env.RIOT_API_KEY}`
     );
     const summonerData = await res2.json();
-
-    const res3 = await fetch(`${process.env.MMR_DATA_URL}${data.name}`);
+    let unicodeName = encodeURI(data.name);
+    const res3 = await fetch(`${process.env.MMR_DATA_URL}${unicodeName}`);
     const mmrData = await res3.json();
+    console.log(res3);
+    var result = "";
+    var tier = "";
 
-    console.log(mmrData.ranked.avg);
+    if (res3.status == 404) {
+      result = "Data not found";
+    } else if (res3.status != 404 && mmrData.ranked.avg == null) {
+      result = "Ranked Data not found";
+    } else {
+      result =
+        "~" + mmrData.ranked.avg + " within " + mmrData.ranked.tierData[1].name;
+    }
 
     response.json({
       summonerData,
       name: data.name,
-      mmr: mmrData.ranked.avg,
-      summary: mmrData.ranked.tierData[1].name
+      mmr: result
     });
   } catch (err) {
     console.error(err);
