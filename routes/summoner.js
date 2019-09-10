@@ -13,6 +13,7 @@ router.get("/:name", async (request, response) => {
       `${process.env.SUMMONER_NAME_URL}/${summonerName}/${process.env.RIOT_API_KEY}`,
       headers
     );
+
     const data = await res.json();
 
     if (data.status && data.status.status_code == 404) {
@@ -28,7 +29,7 @@ router.get("/:name", async (request, response) => {
     }
 
     const accID = data.accountId;
-    console.log(": " + accID);
+    //const mmrResponse = await fetch(`${process.env.MMR_DATA_URL}${data.name}`);
 
     const accountID = data.id;
 
@@ -36,9 +37,17 @@ router.get("/:name", async (request, response) => {
       `${process.env.SUMMONER_DATA_URL}/${accountID}${process.env.RIOT_API_KEY}`
     );
     const summonerData = await res2.json();
+
+    const res3 = await fetch(`${process.env.MMR_DATA_URL}${data.name}`);
+    const mmrData = await res3.json();
+
+    console.log(mmrData.ranked.avg);
+
     response.json({
       summonerData,
-      name: data.name
+      name: data.name,
+      mmr: mmrData.ranked.avg,
+      summary: mmrData.ranked.tierData[1].name
     });
   } catch (err) {
     console.error(err);
