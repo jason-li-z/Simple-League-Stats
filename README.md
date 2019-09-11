@@ -6,5 +6,5 @@ Checks for users favorite champions from League of Legends based on their master
   ##### Main Packages are:
     - Express (for backend API), dotenv (for dealing with environment configs), node-fetch, vue-cli (for frontend)
     
-### Live now on [Here](http://leagueoflegends-masteries.herokuapp.com/):
+### [Live](http://leagueoflegends-masteries.herokuapp.com/) now:
 
